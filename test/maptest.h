@@ -7,12 +7,6 @@
 
 #include <stdio.h>
 
-int *new_int(int x) {
-  int *p = (int *) malloc(sizeof(int));
-  if (p != NULL) *p = x;
-  return p;
-}
-
 void print_risu_map(risu_map *map) {
   risu_map_node *i;
   for (i = map->front; i != NULL; i = i->nxt) {

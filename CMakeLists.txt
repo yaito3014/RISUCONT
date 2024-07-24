@@ -10,5 +10,5 @@ add_executable(risucont
 
 target_compile_options(risucont PUBLIC
         -Wall -Wextra -Wpedantic -Werror
-        -D RISUCONT_MAP_BUCKET_SIZE_LOG2=6
+        -D RISUCONT_MAP_BUCKET_SIZE_LOG2=5
 )
