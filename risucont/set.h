@@ -56,4 +56,40 @@ typedef risu_map risu_set;
 /* find an element in the set by key (time: O(1)) */
 #define find_risu_set(SET, KEY) (find_risu_map((SET), (KEY)))
 
+/* Operations */
+
+/* check if the set0 is a subset of another set0 (time: O(set0->size)) */
+extern int is_subset_risu_set(risu_set *set0, risu_set *set1);
+/* check if the set0 is a proper subset of another set0 (time: O(set0->size)) */
+extern int is_proper_subset_risu_set(risu_set *set0, risu_set *set1);
+/* check if the set0 is equal to another set0 (time: O(set0->size)) */
+extern int is_equal_risu_set(risu_set *set0, risu_set *set1);
+/* check if the set0 is disjoint from another set0 (time: O(set0->size)) */
+extern int is_disjoint_risu_set(risu_set *set0, risu_set *set1);
+
+typedef struct {
+  void *key0;
+  void *key1;
+} risu_set_pair;
+
+typedef struct {
+  void *key;
+  int index;
+} risu_set_union;
+
+/* solve the intersection of two sets (time: O(set0->size + set1->size)) */
+extern risu_set *intersect_risu_set(risu_set *set0, risu_set *set1);
+/* solve the union of two sets (time: O(set0->size + set1->size)) */
+extern risu_set *unite_risu_set(risu_set *set0, risu_set *set1);
+/* solve the difference of two sets (time: O(set0->size + set1->size)) */
+extern risu_set *difference_risu_set(risu_set *set0, risu_set *set1);
+/* solve the symmetric difference of two sets (time: O(set0->size + set1->size)) */
+extern risu_set *symmetric_difference_risu_set(risu_set *set0, risu_set *set1);
+/* solve the cartesian product of two sets (time: O(set0->size * set1->size)) */
+extern risu_set *cartesian_product_risu_set(risu_set *set0, risu_set *set1);
+/* solve the disjoint union of two sets (time: O(set0->size + set1->size)) */
+extern risu_set *disjoint_union_risu_set(risu_set *set0, risu_set *set1);
+/* solve the power set of the set (time: O(2^set->size)) */
+extern risu_set *power_set_risu_set(risu_set *set);
+
 #endif /* RISUCONT_SET_H */

@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 90)
 add_executable(risucont
         test/main.c
         risucont/map.c
+        risucont/set.c
 )
 
 target_compile_options(risucont PUBLIC

@@ -74,7 +74,7 @@ extern risu_map_node *erase_risu_map(risu_map *map, risu_map_node *i);
 /* swap two maps (time: O(BUCKET_SIZE)) */
 extern void swap_risu_map(risu_map *map, risu_map *target);
 /* merge two maps (All elements in the source that are not in the map are moved to the map) (time: O(source->size)) */
-extern void merge_risu_map(risu_map *map, risu_map *source);
+extern int merge_risu_map(risu_map *map, risu_map *source);
 
 /* Lookup */
 

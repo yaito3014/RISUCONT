@@ -67,9 +67,20 @@ risu_map *copy_risu_map(risu_map *map) {
   for (i = map->front; i != NULL; i = i->nxt) {
     void *key = malloc(map->key_byte);
     void *value = malloc(map->value_byte);
+    if (key == NULL || value == NULL) {
+      free(key);
+      free(value);
+      delete_risu_map(copy);
+      return NULL;
+    }
     memcpy(key, i->key, map->key_byte);
     memcpy(value, i->value, map->value_byte);
-    insert_risu_map(copy, key, value);
+    if (insert_risu_map(copy, key, value)) {
+      free(key);
+      free(value);
+      delete_risu_map(copy);
+      return NULL;
+    }
   }
   return copy;
 }
@@ -158,6 +169,8 @@ risu_map_node *erase_risu_map(risu_map *map, risu_map_node *i) {
   else i->prv->nxt = i->nxt;
   if (i->nxt == NULL) map->back = i->prv;
   else i->nxt->prv = i->prv;
+  free(i->key);
+  free(i->value);
   free(i);
   --map->size;
   return nxt;
@@ -173,11 +186,17 @@ void swap_risu_map(risu_map *map, risu_map *target) {
   swap_ptr(map->back, target->back);
 }
 
-void merge_risu_map(risu_map *map, risu_map *source) {
+int merge_risu_map(risu_map *map, risu_map *source) {
   risu_map_node *i;
   for (i = source->front; i != NULL; i = i->nxt) {
-    if (find_risu_map(map, i->key) == NULL) insert_risu_map(map, i->key, i->value);
+    if (find_risu_map(map, i->key) == NULL) {
+      if (insert_risu_map(map, i->key, i->value) == NULL) return -1;
+      i->key = NULL;
+      i->value = NULL;
+      erase_risu_map(source, i);
+    }
   }
+  return 0;
 }
 
 /* Lookup */
