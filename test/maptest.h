@@ -3,8 +3,6 @@
  * SPDX-FileCopyrightText: 2024 TwoSquirrels
  */
 
-/* compiler options: -D RISUCONT_MAP_BUCKET_SIZE_LOG2=6 */
-
 #include "../risucont/map.h"
 
 #include <stdio.h>
@@ -26,7 +24,7 @@ void dump_risu_map(risu_map *map) {
   risu_map_node *i;
   size_t k;
   for (k = 0; k < RISUCONT_MAP_BUCKET_SIZE; ++k) {
-    printf("%zu: ", k);
+    printf("%d: ", (int) k);
     for (i = map->bucket[k]; i != NULL && i->hash == k; i = i->nxt) {
       printf("%d ", *(int *) i->key);
     }
@@ -34,10 +32,12 @@ void dump_risu_map(risu_map *map) {
   }
 }
 
-int main() {
+void test_risu_map(void) {
   risu_map_node *i;
   int k;
   risu_map *map = new_risu_map(int, int);
+  
+  puts("\n======== Testing risucont/map.h ========\n");
   
   /* insert */
   for (k = 0; k < 100; ++k) {
@@ -69,5 +69,4 @@ int main() {
   puts("----------------------------------------");
   
   delete_risu_map(map);
-  return 0;
 }
