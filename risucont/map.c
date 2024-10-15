@@ -187,13 +187,15 @@ void swap_risu_map(risu_map *map, risu_map *target) {
 }
 
 int merge_risu_map(risu_map *map, risu_map *source) {
-  risu_map_node *i;
-  for (i = source->front; i != NULL; i = i->nxt) {
+  risu_map_node *i = source->front, *nxt;
+  while (i != NULL) {
     if (find_risu_map(map, i->key) == NULL) {
       if (insert_risu_map(map, i->key, i->value) == NULL) return -1;
       i->key = NULL;
       i->value = NULL;
+      nxt = i->nxt;
       erase_risu_map(source, i);
+      i = nxt;
     }
   }
   return 0;
